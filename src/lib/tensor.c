@@ -48,13 +48,6 @@ static void print_tensor_recursive(const double *data, const size_t *shape, size
     printf("]");
 }
 
-static void free_tensor(Tensor *tensor)
-{
-    free(tensor->shape);
-    free(tensor->buffer);
-    free(tensor);
-}
-
 static void print_tensor(const Tensor *tensor)
 {
     if (!tensor)
@@ -73,6 +66,13 @@ static void print_tensor(const Tensor *tensor)
     size_t index_offset = 0;
     print_tensor_recursive(tensor->buffer, tensor->shape, tensor->ndim, 1, &index_offset);
     printf(")\n");
+}
+
+static void free_tensor(Tensor *tensor)
+{
+    free(tensor->shape);
+    free(tensor->buffer);
+    free(tensor);
 }
 
 static Tensor *tensor_init(const double *data, const size_t *shape, size_t ndim, enum TensorInitMode init_mode)
