@@ -9,7 +9,6 @@ struct ndarray
 
     void (*free)(struct ndarray *self);
     void (*print)(const struct ndarray *self);
-    struct ndarray *(*matmul)(const struct ndarray *self, const struct ndarray *other);
 };
 
 typedef struct ndarray Tensor;

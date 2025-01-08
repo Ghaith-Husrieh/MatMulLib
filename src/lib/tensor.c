@@ -4,13 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void free_tensor(Tensor *tensor)
-{
-    free(tensor->shape);
-    free(tensor->buffer);
-    free(tensor);
-}
-
 static void print_tensor_recursive(const double *data, const size_t *shape, size_t ndim, size_t level, size_t *index_offset)
 {
     if (ndim == 1)
@@ -46,12 +39,20 @@ static void print_tensor_recursive(const double *data, const size_t *shape, size
         }
     }
     printf("\n");
+
     // Indentation for closing brackets
     for (size_t j = 0; j < level - 1; j++)
     {
         printf("    ");
     }
     printf("]");
+}
+
+static void free_tensor(Tensor *tensor)
+{
+    free(tensor->shape);
+    free(tensor->buffer);
+    free(tensor);
 }
 
 static void print_tensor(const Tensor *tensor)
@@ -62,7 +63,7 @@ static void print_tensor(const Tensor *tensor)
         return;
     }
 
-    if (!tensor->shape || !tensor->buffer)
+    if (!tensor->shape || !tensor->buffer || tensor->ndim == 0)
     {
         printf("Tensor is not initialized properly\n");
         return;
@@ -163,7 +164,6 @@ static Tensor *tensor_init(const double *data, const size_t *shape, size_t ndim,
 
     tensor->free = free_tensor;
     tensor->print = print_tensor;
-    tensor->matmul = matmul;
 
     return tensor;
 }
