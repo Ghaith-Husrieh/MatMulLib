@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <omp.h>
 
 static size_t *pad_shape(const size_t *original_shape, const size_t original_ndim, const size_t target_ndim)
 {
@@ -138,6 +139,7 @@ Tensor *matmul(const Tensor *A, const Tensor *B)
         const double *B_batch = B->buffer + index_offsetB * K * N;
         double *C_batch = C->buffer + batch * M * N;
 
+#pragma omp parallel for collapse(2) schedule(static)
         // Matrix multiplication for the current batch
         for (size_t i = 0; i < M; i++)
         {
