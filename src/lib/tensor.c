@@ -1,8 +1,9 @@
-#include "../../include/tensor.h"
-#include "../../include/matmul.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../../include/tensor.h"
+#include "../../include/matmul.h"
+#include "../../include/random.h"
 
 static void print_tensor_recursive(const double *data, const size_t *shape, size_t ndim, size_t level, size_t *index_offset)
 {
@@ -160,6 +161,18 @@ static Tensor *tensor_init(const double *data, const size_t *shape, size_t ndim,
             tensor->buffer[i] = 1.0;
         }
         break;
+    case TENSOR_RANDN:
+        for (size_t i = 0; i < numel; i++)
+        {
+            tensor->buffer[i] = normal(0.0, 1.0);
+        }
+        break;
+    case TENSOR_RAND:
+        for (size_t i = 0; i < numel; i++)
+        {
+            tensor->buffer[i] = uniform(0.0, 1.0);
+        }
+        break;
     }
 
     tensor->free = free_tensor;
@@ -187,4 +200,14 @@ Tensor *zeros_tensor(const size_t *shape, size_t ndim)
 Tensor *ones_tensor(const size_t *shape, size_t ndim)
 {
     return tensor_init(NULL, shape, ndim, TENSOR_ONES);
+}
+
+Tensor *randn_tensor(const size_t *shape, size_t ndim)
+{
+    return tensor_init(NULL, shape, ndim, TENSOR_RANDN);
+}
+
+Tensor *rand_tensor(const size_t *shape, size_t ndim)
+{
+    return tensor_init(NULL, shape, ndim, TENSOR_RAND);
 }

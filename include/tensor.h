@@ -18,7 +18,9 @@ enum TensorInitMode
     TENSOR_WITH_DATA,     // Initialize with provided data
     TENSOR_UNINITIALIZED, // Leave memory uninitialized
     TENSOR_ZEROS,         // Initialize all elements to 0
-    TENSOR_ONES           // Initialize all elements to 1
+    TENSOR_ONES,          // Initialize all elements to 1
+    TENSOR_RANDN,
+    TENSOR_RAND
 };
 
 /**
@@ -82,3 +84,31 @@ Tensor *zeros_tensor(const size_t *shape, size_t ndim);
  *         The tensor should be freed using its `free` function (`tensor->free`).
  */
 Tensor *ones_tensor(const size_t *shape, size_t ndim);
+
+/**
+ * @brief Creates a multi-dimensional tensor initialized with normally distributed random values.
+ *
+ * Allocates memory for a tensor, including its shape and data buffer, and initializes
+ * the data with random values drawn from a normal distribution.
+ *
+ * @param shape Pointer to an array of `size_t` specifying the size of each dimension.
+ * @param ndim Number of dimensions in the tensor. Must be greater than 0.
+ *
+ * @return Pointer to a dynamically allocated `Tensor` structure, or NULL on failure.
+ *         The tensor should be freed using its `free` function (`tensor->free`).
+ */
+Tensor *randn_tensor(const size_t *shape, size_t ndim);
+
+/**
+ * @brief Creates a multi-dimensional tensor initialized with uniformly distributed random values.
+ *
+ * Allocates memory for a tensor, including its shape and data buffer, and initializes
+ * the data with random values drawn from a uniform distribution.
+ *
+ * @param shape Pointer to an array of `size_t` specifying the size of each dimension.
+ * @param ndim Number of dimensions in the tensor. Must be greater than 0.
+ *
+ * @return Pointer to a dynamically allocated `Tensor` structure, or NULL on failure.
+ *         The tensor should be freed using its `free` function (`tensor->free`).
+ */
+Tensor *rand_tensor(const size_t *shape, size_t ndim);
