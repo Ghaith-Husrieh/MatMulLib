@@ -5,6 +5,7 @@ struct ndarray
 {
     size_t ndim;
     size_t *shape;
+    size_t numel;
     double *buffer;
 
     void (*free)(struct ndarray *self);

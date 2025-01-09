@@ -124,6 +124,8 @@ static Tensor *tensor_init(const double *data, const size_t *shape, size_t ndim,
         free(tensor);
         return NULL;
     }
+    tensor->numel = numel;
+
     tensor->buffer = malloc(numel * sizeof(double));
     if (!tensor->buffer)
     {
